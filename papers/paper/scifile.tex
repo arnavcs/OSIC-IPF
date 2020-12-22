@@ -1,0 +1,200 @@
+% Use only LaTeX2e, calling the article.cls class and 12-point type.
+
+\documentclass[12pt]{article}
+
+% Users of the {thebibliography} environment or BibTeX should use the
+% scicite.sty package, downloadable from *Science* at
+% www.sciencemag.org/about/authors/prep/TeX_help/ .
+% This package should properly format in-text
+% reference calls and reference-list numbers.
+
+\usepackage{scicite}
+
+% Use times if you have the font installed; otherwise, comment out the
+% following line.
+
+\usepackage{times}
+
+% The preamble here sets up a lot of new/revised commands and
+% environments.  It's annoying, but please do *not* try to strip these
+% out into a separate .sty file (which could lead to the loss of some
+% information when we convert the file to other formats).  Instead, keep
+% them in the preamble of your main LaTeX source file.
+
+
+% The following parameters seem to provide a reasonable page setup.
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm
+\textheight 21cm
+\footskip 1.0cm
+
+
+%The next command sets up an environment for the abstract to your paper.
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+% If your reference list includes text notes as well as references,
+% include the following line; otherwise, comment it out.
+
+\renewcommand\refname{References and Notes}
+
+% The following lines set up an environment for the last note in the
+% reference list, which commonly includes acknowledgments of funding,
+% help, etc.  It's intended for users of BibTeX or the {thebibliography}
+% environment.  Users who are hand-coding their references at the end
+% using a list environment such as {enumerate} can simply add another
+% item at the end, and it will be numbered automatically.
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+% Include your paper's title here
+
+\title{Predicting Idiopathic Pulmonary Fibrosis Progression}
+
+% Place the author information here.  Please hand-code the contact
+% information and notecalls; do *not* use \footnote commands.  Let the
+% author contact information appear immediately below the author names
+% as shown.  We would also prefer that you don't change the type-size
+% settings shown here.
+
+\author{\textbf{Arnav Kumar} \\ 
+Grade 11 Webber Academy Applied Science Student\thanks{Under Supervision of Dr. Garcia-Diaz} \\[0.1in] 
+Correspondence to \textbf{Dr. Christian Jacob} \\ 
+University of Calgary - Department of Computer Science, \\ 
+Department of Biochemistry and Molecular Biology}
+
+% Include the date command, but leave its argument blank.
+
+\date{}
+
+
+\RequirePackage{doi}
+\usepackage{hyperref}
+
+
+%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
+
+
+
+\begin{document} 
+
+% Double-space the manuscript.
+
+\baselineskip24pt
+
+% Make the title.
+
+\maketitle 
+
+
+
+% Place your abstract within the special {sciabstract} environment.
+
+% \begin{sciabstract}
+%   How difficult is it to give an accurate prognosis of Idiopathic Pulmonary Fibrosis?
+%   This study employs many machine learning model to accurately predict how quickly the disease deteriorates.
+%   Using a baseline CT scan of the lungs, and the forced vital capacity (FVC) of the lungs on subsequent checkups, the model predicts the FVC of the lungs for the follwing weeks.
+%   The model was made using an ensemble of various deep learning, and statistical learning methods to attain a high accuracy.
+% \end{sciabstract}
+
+
+
+% In setting up this template for *Science* papers, we've used both
+% the \section* command and the \paragraph* command for topical
+% divisions.  Which you use will of course depend on the type of paper
+% you're writing.  Review Articles tend to have displayed headings, for
+% which \section* is more appropriate; Research Articles, when they have
+% formal topical divisions at all, tend to signal them with bold text
+% that runs into the paragraph, for which \paragraph* is the right
+% choice.  Either way, use the asterisk (*) modifier, as shown, to
+% suppress numbering.
+
+\section*{Introduction}
+
+\paragraph*{Idiopathic Pulmonary Fibrosis.}
+
+Idiopathic Pulmonary Fibrosis (IPF) or Cryptogenic Fibrosing Alveolitis (CFA) is a disease affecting the lung base and leads to lung function decline with little to no therapies available other than lung transplant \cite{mason1999pharmacological,gross2001idiopathic}. 
+Although it was previously believed that the disease affects only 5 out of every 100,000 individuals, the disease is now known to be much more prevalent \cite{coultas1994epidemiology,mason1999pharmacological,raghu2018diagnosis}. 
+The disease is age-related but does not have any known cause and mainly affects older patients with the median age at diagnosis being 66 \cite{king2011idiopathic,raghu2018diagnosis}. % remember to get primary source
+Recently, there have been claims that it is a result of abnormally activated alveolar epithelial cells \cite{king2011idiopathic}. % remember to get primary source
+Patients experience a shortness of breath, and some features of the disease include diffuse pulmonary infiltrates recognizable by radiography and varying degrees of inflammation or fibrosis \cite{gross2001idiopathic}. 
+Affected lung areas alternate with unaffected areas in the lung \cite{gross2001idiopathic}.
+Affected areas are characterized by the differences in cell age and due to a honeycomb fibrosis pattern \cite{gross2001idiopathic}.
+
+The outcome of Pulmonary Fibrosis can range from rapid health declination to a healthy stability, but doctors are unable to easily diagnose the severity of the disease. 
+There exist methods to diagnose severity, but these can be complicated and are not standardized \cite{robbie2017evaluating}. 
+An example of such a method is a cough scale questionnaire or a shortness of breath questionnaire \cite{robbie2017evaluating,king2014phase,van2016cough}.
+Another method of diagnosing severity is through a functionality test known as the 6 month 6 minute Walk Distance or 6MWD test, but as the name suggests, this test is not instantaneous, and still requires the effort of trained professionals \cite{robbie2017evaluating,du20146}.
+On the other hand, Machine learning has been used with data from different points in time to provide a prognosis by using a software tool called CALIPER that uses radiological changes to predict IPF severity \cite{maldonado2014automated}.
+Another case of using machine learning used computed tomography (CT) scans of the lung region and obtained an accuracy of around 76.4\% or 70.7\%, only outperformed 66\% of doctors and only classified the severity rather than providing numerical estimates \cite{walsh2018deep}.
+An accurate prognosis of the disease will put patients at more ease, and may pave the path for any treatments that will come in the future. 
+For this reason, it is essential that a consistent and easy method for diagnosing the severity of the disease is found.
+
+\paragraph*{Deep Learning Methods.}
+
+Machine learning is a good fit for the task at hand because doctors can let the program run given the data, and it has been used in the past to diagnose other diseases and make predictions \cite{wang2010high}. 
+Although machine learning has been used before for this task \cite{robbie2017evaluating,du20146,maldonado2014automated}, the accuracy of the models can be improved on.
+Furthermore, a machine learning model could make it easier to get a prognosis.
+
+For a disease such as IPF which is a fibrosing disease within the lungs, imaging the lungs through CT scans yields in enough insight to accurately evaluate the patients prognosis \cite{walsh2018role}.
+
+Furthermore, for injuries like neck fractures, machine learning has proven to be an improvement to the prediction performance using a method of bayesian classification \cite{kukar1996machine}.
+For diseases like cancer, machine learning has also been used to give a prognosis and modern machine learning methods have been shown to outperform more classical methods including decision trees \cite{cruz2006applications}.
+On another note, machine learning has already been used with images of leafs to determine plant diseases and their severity, showing the ability to handle and diagnose disease severity based on a CT scan input using machine learning \cite{mwebaze2016machine}.
+
+\paragraph*{Question}
+
+This study aims to create a model that uses one baseline CT scan, as well as the forced vital capacity (FVC) of the lungs over the time period of one to two years.
+The model then predicts the FVC of the lungs for the next 3 checkups, and hence predicting the rate at which the lung condition degrades. 
+The main questions of interest are: what is the greatest accuracy a machine learning model can attain in predicting the FVC of a IPF patient on their next 3 checkups, and what method produces this accuracy? 
+
+\bibliography{scibib}
+
+\bibliographystyle{Science}
+
+
+
+% Following is a new environment, {scilastnote}, that's defined in the
+% preamble and that allows authors to add a reference at the end of the
+% list that's not signaled in the text; such references are used in
+% *Science* for acknowledgments of funding, help, etc.
+
+% \begin{scilastnote}
+% \item We've included in the template file \texttt{scifile.tex} a new
+% environment, \texttt{\{scilastnote\}}, that generates a numbered final
+% citation without a corresponding signal in the text.  This environment
+% can be used to generate a final numbered reference containing
+% acknowledgments, sources of funding, and the like, per {\it Science\/}
+% style.
+% \end{scilastnote}
+
+
+
+
+% For your review copy (i.e., the file you initially send in for
+% evaluation), you can use the {figure} environment and the
+% \includegraphics command to stream your figures into the text, placing
+% all figures at the end.  For the final, revised manuscript for
+% acceptance and production, however, PostScript or other graphics
+% should not be streamed into your compliled file.  Instead, set
+% captions as simple paragraphs (with a \noindent tag), setting them
+% off from the rest of the text with a \clearpage as shown  below, and
+% submit figures as separate files according to the Art Department's
+% instructions.
+
+
+
+\end{document}

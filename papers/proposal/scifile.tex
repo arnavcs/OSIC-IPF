@@ -1,0 +1,269 @@
+% Use only LaTeX2e, calling the article.cls class and 12-point type.
+
+\documentclass[12pt]{article}
+
+% Users of the {thebibliography} environment or BibTeX should use the
+% scicite.sty package, downloadable from *Science* at
+% www.sciencemag.org/about/authors/prep/TeX_help/ .
+% This package should properly format in-text
+% reference calls and reference-list numbers.
+
+\usepackage{scicite}
+
+% Use times if you have the font installed; otherwise, comment out the
+% following line.
+
+\usepackage{times}
+
+% The preamble here sets up a lot of new/revised commands and
+% environments.  It's annoying, but please do *not* try to strip these
+% out into a separate .sty file (which could lead to the loss of some
+% information when we convert the file to other formats).  Instead, keep
+% them in the preamble of your main LaTeX source file.
+
+
+% The following parameters seem to provide a reasonable page setup.
+
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+
+%The next command sets up an environment for the abstract to your paper.
+
+\newenvironment{sciabstract}{%
+\begin{quote} \bf}
+{\end{quote}}
+
+% If your reference list includes text notes as well as references,
+% include the following line; otherwise, comment it out.
+
+\renewcommand\refname{References and Notes}
+
+% The following lines set up an environment for the last note in the
+% reference list, which commonly includes acknowledgments of funding,
+% help, etc.  It's intended for users of BibTeX or the {thebibliography}
+% environment.  Users who are hand-coding their references at the end
+% using a list environment such as {enumerate} can simply add another
+% item at the end, and it will be numbered automatically.
+
+\newcounter{lastnote}
+\newenvironment{scilastnote}{%
+\setcounter{lastnote}{\value{enumiv}}%
+\addtocounter{lastnote}{+1}%
+\begin{list}%
+{\arabic{lastnote}.}
+{\setlength{\leftmargin}{.22in}}
+{\setlength{\labelsep}{.5em}}}
+{\end{list}}
+
+
+% Include your paper's title here
+
+\title{Predicting Idiopathic Pulmonary Fibrosis Progression \\[0.1in] Research Proposal}
+
+% Place the author information here.  Please hand-code the contact
+% information and notecalls; do *not* use \footnote commands.  Let the
+% author contact information appear immediately below the author names
+% as shown.  We would also prefer that you don't change the type-size
+% settings shown here.
+
+\author{\textbf{Arnav Kumar} \\ 
+Grade 11 Webber Academy Applied Science Student\thanks{Under Supervision of Dr. Garcia-Diaz} \\[0.1in] 
+Correspondence to \textbf{Dr. Christian Jacob} \\ 
+University of Calgary - Department of Computer Science, \\ 
+Department of Biochemistry and Molecular Biology}
+
+% Include the date command, but leave its argument blank.
+
+\date{}
+
+
+\RequirePackage{doi}
+\usepackage{hyperref}
+
+
+%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
+
+
+
+\begin{document} 
+
+% Double-space the manuscript.
+
+\baselineskip24pt
+
+% Make the title.
+
+\maketitle 
+
+
+
+% Place your abstract within the special {sciabstract} environment.
+
+\begin{sciabstract}
+  How difficult is it to give an accurate prognosis of Idiopathic Pulmonary Fibrosis?
+  This study implements a Machine Learning Model to accurately estimate how quickly a case of the disease deteriorates.
+  Using CT scans of the lungs from previous doctor checkups along with metadata, the model predicts the conditions of the lungs on the next three checkups.
+  The model was made using an ensemble of various deep learning, and statistical learning methods to attain a high accuracy.
+\end{sciabstract}
+
+
+
+% In setting up this template for *Science* papers, we've used both
+% the \section* command and the \paragraph* command for topical
+% divisions.  Which you use will of course depend on the type of paper
+% you're writing.  Review Articles tend to have displayed headings, for
+% which \section* is more appropriate; Research Articles, when they have
+% formal topical divisions at all, tend to signal them with bold text
+% that runs into the paragraph, for which \paragraph* is the right
+% choice.  Either way, use the asterisk (*) modifier, as shown, to
+% suppress numbering.
+
+\section*{Introduction}
+
+\paragraph*{Idiopathic Pulmonary Fibrosis.}
+
+Idiopathic Pulmonary Fibrosis (IPF) or Cryptogenic Fibrosing Alveolitis (CFA) is a disease affecting the lung base and leads to lung function decline with little to no therapies available other than lung transplant \cite{mason1999pharmacological,gross2001idiopathic}. 
+Although it was previously believed that the disease affects only 5 out of every 100,000 individuals, the disease is now known to be much more prevalent \cite{coultas1994epidemiology,mason1999pharmacological,raghu2018diagnosis}. 
+The disease is age-related but does not have any known cause and mainly affects older patients with the median age at diagnosis being 66 \cite{king2011idiopathic,raghu2018diagnosis}. % remember to get primary source
+Recently, there have been claims that it is a result of abnormally activated alveolar epithelial cells \cite{king2011idiopathic}. % remember to get primary source
+Patients experience a shortness of breath, and some features of the disease include diffuse pulmonary infiltrates recognizable by radiography and varying degrees of inflammation or fibrosis \cite{gross2001idiopathic}. 
+Affected lung areas alternate with unaffected areas in the lung \cite{gross2001idiopathic}.
+Affected areas are characterized by the differences in cell age and due to a honeycomb fibrosis pattern \cite{gross2001idiopathic}.
+
+The outcome of Pulmonary Fibrosis can range from rapid health declination to a healthy stability, but doctors are unable to easily diagnose the severity of the disease. 
+There exist methods to diagnose severity, but these can be complicated and are not standardized \cite{robbie2017evaluating}. 
+An example of such a method is a cough scale questionnaire or a shortness of breath questionnaire \cite{robbie2017evaluating,king2014phase,van2016cough}.
+Another method of diagnosing severity is through a functionality test know as the 6 month 6 minute Walk Distance or 6MWD test, but as the name suggests, this test is not instantaneous, and still requires the effort of trained professionals \cite{robbie2017evaluating,du20146}.
+On the other hand, Machine learning has been used with data from different points in time to provide a prognosis by using a software tool called CALIPER that uses radiological changes to predict IPF severity \cite{maldonado2014automated}.
+Another case of using machine learning used CT scans of the lung region and obtained an accuracy of around 76.4\% or 70.7\%, only outperformed 66\% of doctors and only classified the severity rather than providing numerical estimates \cite{walsh2018deep}.
+An accurate prognosis of the disease will put patients at more ease, and may pave the path for any treatments that will come in the future. 
+For this reason, it is essential that a consistent and easy method for diagnosing the severity of the disease is found.
+
+\paragraph*{Deep Learning Methods.}
+
+Machine learning is a good fit for the task at hand because doctors can let the program run given the data, and it has been used in the past to diagnose other diseases and make predictions \cite{wang2010high}. 
+Although machine learning has been used before for this task \cite{robbie2017evaluating,du20146,maldonado2014automated}, the accuracy of the models can be improved on.
+Furthermore, a machine learning model could make it easier to get a prognosis.
+
+For a disease such as IPF which is a fibrosing disease within the lungs, imaging the lungs through Computed Tomography scans yields in enough insight to accurately evaluate the patients prognosis \cite{walsh2018role}.
+
+Furthermore, for injuries like neck fractures, machine learning has proven to be an improvement to the prediction performance using a method of bayesian classification \cite{kukar1996machine}.
+For diseases lie cancer, machine learning has also been used to give a prognosis and modern machine learning methods have been shown to outperform more classical methods including decision trees \cite{cruz2006applications}.
+On another note, machine learning has already been used with images of leafs to determine plant diseases and their severity, showing the ability to handle and diagnose disease severity based on a CT scan input using machine learning \cite{mwebaze2016machine}.
+
+\section*{Question}
+
+The model will use one baseline CT scan, as well as the forced vital capacity (FVC) of the lungs over the time period of one to two years.
+The model then predicts the FVC of the lungs for the next 3 checkups, and hence predicting the rate at which the lung condition degrades. 
+What is the greatest accuracy a machine learning model can attain in predicting the lung condition of a IPF patient on their next 3 checkups?  
+What method gives this accuracy?
+
+\section*{Objectives}
+
+\paragraph*{Short Term Objectives.}
+
+Create 7 machine learning models (described in detail in Methodology) that predict the severity of a case of IPF with high accuracy, then combine their results using ensemble model methods.
+
+\paragraph*{Long Term Objectives.}
+
+Create a graphical user interface for the program that medical professionals will be able to use to enter their base lung CT scan along with the FVC measurements to get an estimated severity along with a measure of confidence of the model. 
+The model will have minimized the loss function to a global minimum. 
+
+\section*{Variables}
+
+\paragraph*{Independent Variables.}
+
+Since there are many ways to create such a model, there are any independent variables. 
+The most important ones are the machine learning model used (the 7 methods used are listed in Methodology), how long the model trains (since the dataset is limited and there is fear of over-fitting), and the descent method (Adam or gradient descent) used by the model.
+These will affect the outcomes of the project.
+
+\paragraph*{Dependent Variable.}
+
+The model's accuracy is the dependent variable.
+There are many measures of the model's accuracy, and one must be chosen to be used for all models to keep it consistent.
+The specific measure of accuracy will be chosen after analysing the data and the effects of the measures on the way the model trains.
+
+\paragraph*{Controlled Variables}
+
+The only controlled variable is the data provided by Open Source Image Consortium containing CT scans and FVC measurements \cite{kaggle}.
+
+\section*{Methodology}
+
+\paragraph*{Theoretical.}
+
+Since the dataset contains images in the form of a base CT scan, the use of a convolutional neural network would be viable \cite{xu2014deep}. 
+Along with this, the use of certain protocols such as $k$-fold learning would streamline the training process \cite{friedman2001elements}. 
+The use of ensemble learning could potentially increase the accuracy of the model and reduce the dangers of over-fitting and under-fitting \cite{dietterich2002ensemble}.
+The following are the methods that will be implemented into the ensemble: Linear Decay \cite{10.1145/2939672.2939785}, Feature Engineering with a Linear Model \cite{10.5555/3239815}, Extreme Gradient Boosting \cite{10.1145/2939672.2939785}, Bayesian Learning \cite{10.5555/525544}, Auto-Encoder Training \cite{10.5555/3045796.3045801}, as well as using Quantile Regression \cite{jia2020deep} with a Convolutional Neural Network (ResNet and EfficientNet) \cite{10.5555/553011}.
+These methods are all very different and will be a good test bed of models that will show their effectiveness.
+The ensemble \cite{10.5555/648054.743935} will combine all of these methods with correct weights in a neural network of its own.
+
+Along with the creation of this ensemble model, it is possible to use machine learning to segment the lung CT scans into sections that would contain the information relevant to give an accurate prognosis. 
+Although this is not directly related to creating an algorithm to determine the severity of the disease, this would be useful information for doctors to have when examining CT scans of their patients.
+Doctors would be able to determine the sections of the lungs responsible for a more severe case of IPF.
+
+\paragraph*{Implementation.}
+
+In the short term, the data given in the kaggle competition \cite{kaggle} will be sorted and analysed to get an understanding of what measure of error would be best.
+The machine learning toolkit used relies heavily on python, and the models will be coded in python \cite{10.5555/1593511}. 
+Tensor Flow will be used for the vector and matrix manipulation, and for the creation of the models \cite{tensorflow2015-whitepaper}. 
+These will be hosted locally or on a cloud computing server to reduce computation time.
+By creating the models individually, then calling all the methods in the ensemble method, the model will output one prediction.
+
+\section*{Significance}
+
+Is is important that a simple, effective prognosis for IPF is found as it would reduce the work of doctors and help patients alike.
+Since IPF affects greater than the 0.005\% of individuals that was previously hypothesized \cite{raghu2018diagnosis}, it is important to know more about this disease where more and more cases are being found.
+
+Current prognosis methods for IPF use machine learning such as in \cite{walsh2018deep}, but the output of the model is a categorical value, rather than a numerical prediction for the forced vital capacity of the patient's lungs.
+Other methods also use data harder to obtain such as the measurement of radiological changes in \cite{maldonado2014automated}.
+For this reason, a machine learning model of high accuracy based on one initial lung CT scan and FVC values on subsequent doctor visits would make the work of doctors much easier and would require scans which aren't as time consuming.
+
+If successful, a model with great accuracy would make it such that patients with IPF would know the severity of their disease.
+This could reduce the stress and anxiety of patients.
+
+Furthermore, a more accurate prediction could help doctors test potential cures of IPF.
+The model's predictions could act as a metric to measure if the cure truly works.
+If the cure changes the predictions of the neural network over a certain time period, then it is likely that the cure is effective.
+
+\bibliography{scibib}
+
+\bibliographystyle{Science}
+
+
+
+% Following is a new environment, {scilastnote}, that's defined in the
+% preamble and that allows authors to add a reference at the end of the
+% list that's not signaled in the text; such references are used in
+% *Science* for acknowledgments of funding, help, etc.
+
+% \begin{scilastnote}
+% \item We've included in the template file \texttt{scifile.tex} a new
+% environment, \texttt{\{scilastnote\}}, that generates a numbered final
+% citation without a corresponding signal in the text.  This environment
+% can be used to generate a final numbered reference containing
+% acknowledgments, sources of funding, and the like, per {\it Science\/}
+% style.
+% \end{scilastnote}
+
+
+
+
+% For your review copy (i.e., the file you initially send in for
+% evaluation), you can use the {figure} environment and the
+% \includegraphics command to stream your figures into the text, placing
+% all figures at the end.  For the final, revised manuscript for
+% acceptance and production, however, PostScript or other graphics
+% should not be streamed into your compliled file.  Instead, set
+% captions as simple paragraphs (with a \noindent tag), setting them
+% off from the rest of the text with a \clearpage as shown  below, and
+% submit figures as separate files according to the Art Department's
+% instructions.
+
+
+
+\end{document}
