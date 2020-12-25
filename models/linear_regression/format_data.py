@@ -106,7 +106,7 @@ feature_columns = [  #     'Percent',       including this makes the whole model
 
 # saving the feature_columns
 
-pd.DataFrame(feature_columns).to_csv('feature_columns.csv', index=False)
+pd.DataFrame(feature_columns).to_csv('extra/feature_columns.csv', index=False)
 
 
 # scale the features so that they are between 0 and 1
@@ -125,6 +125,6 @@ submission = all_data.loc[all_data.Dataset == 'submission']
 
 # writes the data to a file
 
-train.to_csv('formatted_train.csv', index=False)
-test.to_csv('formatted_test.csv', index=False)
-submission.to_csv('formatted_submission.csv', index=False)
+train.to_csv('extra/formatted_train.csv', index=False)
+test.to_csv('extra/formatted_test.csv', index=False)
+submission.to_csv('extra/formatted_submission.csv', index=False)

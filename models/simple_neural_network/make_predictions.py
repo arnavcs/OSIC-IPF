@@ -12,16 +12,17 @@ import tensorflow as tf
 
 # loading the model, data, feature_columns, and fvc_scale
 
-train = pd.read_csv('formatted_train.csv')
-submission = pd.read_csv('formatted_submission.csv')
+train = pd.read_csv('extra/formatted_train.csv')
+submission = pd.read_csv('extra/formatted_submission.csv')
 
-model = tf.keras.models.load_model('model.h5')
+model = tf.keras.models.load_model('extra/model.h5')
 
-feature_columns = pd.read_csv('feature_columns.csv').values.tolist()
+feature_columns = pd.read_csv('extra/feature_columns.csv'
+                              ).values.tolist()
 for i in range(len(feature_columns)):
     feature_columns[i] = feature_columns[i][0]
 
-fvc_scale = int(open('fvc_scale.txt', 'r').read())
+fvc_scale = int(open('extra/fvc_scale.txt', 'r').read())
 
 # getting the mae, mse, and loss of the model on the training data
 

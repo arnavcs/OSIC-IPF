@@ -14,9 +14,9 @@ import pickle
 
 # reading the data and the feature_columns
 
-train = pd.read_csv('formatted_train.csv')
+train = pd.read_csv('extra/formatted_train.csv')
 
-feature_columns = pd.read_csv('feature_columns.csv').values.tolist()
+feature_columns = pd.read_csv('extra/feature_columns.csv').values.tolist()
 for i in range(len(feature_columns)):
     feature_columns[i] = feature_columns[i][0]
 
@@ -30,4 +30,4 @@ model.fit(train[feature_columns], train['FVC'])
 
 # saving the model
 
-pickle.dump(model, open('model.sav', 'wb'))
+pickle.dump(model, open('extra/model.sav', 'wb'))

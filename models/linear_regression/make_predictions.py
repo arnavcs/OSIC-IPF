@@ -15,12 +15,12 @@ import pickle
 
 # loading the model, data, and feature_columns
 
-train = pd.read_csv('formatted_train.csv')
-submission = pd.read_csv('formatted_submission.csv')
+train = pd.read_csv('extra/formatted_train.csv')
+submission = pd.read_csv('extra/formatted_submission.csv')
 
-model = pickle.load(open('model.sav', 'rb'))
+model = pickle.load(open('extra/model.sav', 'rb'))
 
-feature_columns = pd.read_csv('feature_columns.csv').values.tolist()
+feature_columns = pd.read_csv('extra/feature_columns.csv').values.tolist()
 for i in range(len(feature_columns)):
     feature_columns[i] = feature_columns[i][0]
 

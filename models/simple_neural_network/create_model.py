@@ -12,11 +12,13 @@ import tensorflow as tf
 
 # reading the important data from files
 
-train = pd.read_csv('formatted_train.csv')
+train = pd.read_csv('extra/formatted_train.csv')
 
-feature_columns = pd.read_csv('feature_columns.csv').values.tolist()
+feature_columns = pd.read_csv('extra/feature_columns.csv'
+                              ).values.tolist()
 for i in range(len(feature_columns)):
     feature_columns[i] = feature_columns[i][0]
+
 
 # making the basic neural network model
 
@@ -43,4 +45,4 @@ history = model.fit(train[feature_columns], train['FVC'], epochs=200)
 
 # saving the model to a file
 
-model.save('model.h5')
+model.save('extra/model.h5')

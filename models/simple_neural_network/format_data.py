@@ -106,23 +106,26 @@ feature_columns = [  #     'Percent',       including this makes the whole model
 
 # saving the feature_columns
 
-pd.DataFrame(feature_columns).to_csv('feature_columns.csv', index=False)
+pd.DataFrame(feature_columns).to_csv('extra/feature_columns.csv',
+        index=False)
 
 
 # normalizes features
 
 def norm(series):
-    return (series - series.mean()) / (series.std())
+    return (series - series.mean()) / series.std()
 
-all_data[feature_columns] = \
-    all_data[feature_columns].apply(norm)
-    
+
+all_data[feature_columns] = all_data[feature_columns].apply(norm)
+
 # scales all the FVC values to be between 0 and 1
+
 fvc_scale = all_data['FVC'].max()
 all_data['FVC'] /= fvc_scale
 
 # stores FVC_scale amount in file
-open('fvc_scale.txt', 'w').write(str(fvc_scale))
+
+open('extra/fvc_scale.txt', 'w').write(str(fvc_scale))
 
 # seperating the data into 3 seperate sections again
 
@@ -132,6 +135,6 @@ submission = all_data.loc[all_data.Dataset == 'submission']
 
 # writes the data to a file
 
-train.to_csv('formatted_train.csv', index=False)
-test.to_csv('formatted_test.csv', index=False)
-submission.to_csv('formatted_submission.csv', index=False)
+train.to_csv('extra/formatted_train.csv', index=False)
+test.to_csv('extra/formatted_test.csv', index=False)
+submission.to_csv('extra/formatted_submission.csv', index=False)
