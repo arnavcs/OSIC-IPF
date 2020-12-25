@@ -1,4 +1,14 @@
+# Dataset ignore
+input
+
 # Python ignore
+
+# outputs of python files
+extra
+*.txt
+*.csv
+*.sav
+*.h5
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -376,7 +386,6 @@ TSWLatexianTemp*
 ## Editors:
 # WinEdt
 *.bak
-*.sav
 
 # Texpad
 .texpadtmp
