@@ -109,13 +109,20 @@ feature_columns = [  #     'Percent',       including this makes the whole model
 pd.DataFrame(feature_columns).to_csv('feature_columns.csv', index=False)
 
 
-# scale the features so that they are between 0 and 1
+# normalizes features
 
-def scale_feature(series):
-    return (series - series.min()) / (series.max() - series.min())
+def norm(series):
+    return (series - series.mean()) / (series.std())
 
 all_data[feature_columns] = \
-    all_data[feature_columns].apply(scale_feature)
+    all_data[feature_columns].apply(norm)
+    
+# scales all the FVC values to be between 0 and 1
+fvc_scale = all_data['FVC'].max()
+all_data['FVC'] /= fvc_scale
+
+# stores FVC_scale amount in file
+open('fvc_scale.txt', 'w').write(str(fvc_scale))
 
 # seperating the data into 3 seperate sections again
 

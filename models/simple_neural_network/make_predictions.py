@@ -1,42 +1,43 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# importing all the neccesarry dependencies
+# loading the dependencies
 
 import os
 import sys
 
 import numpy as np
 import pandas as pd
-import sklearn as sk
-from sklearn.metrics import mean_squared_error, mean_absolute_error
 import tensorflow as tf
-import pickle
 
-# loading the model, data, and feature_columns
+# loading the model, data, feature_columns, and fvc_scale
 
 train = pd.read_csv('formatted_train.csv')
 submission = pd.read_csv('formatted_submission.csv')
 
-model = pickle.load(open('model.sav', 'rb'))
+model = tf.keras.models.load_model('model.h5')
 
 feature_columns = pd.read_csv('feature_columns.csv').values.tolist()
 for i in range(len(feature_columns)):
     feature_columns[i] = feature_columns[i][0]
 
-# making the predictions for the training data it was trained on
+fvc_scale = int(open('fvc_scale.txt', 'r').read())
 
-train['Predictions'] = model.predict(train[feature_columns])
+# getting the mae, mse, and loss of the model on the training data
 
-# calculating and evaluating the loss of the model wrt the training data
+(loss, mae, mse) = model.evaluate(train[feature_columns], train['FVC'],
+                                  verbose=0)
 
-mse = mean_squared_error(train['FVC'], train['Predictions'], squared=False)
-mae = mean_absolute_error(train['FVC'], train['Predictions'])
+print ('MSE Loss:', mse)
+print ('MAE Loss:', mae)
 
-print('MSE Loss:', mse)
-print('MAE Loss:', mae)
+# making predictions on the training data, and rescales the FVC to be back to the normal scale
 
-# using the laplace log metric of the model's performance wrt its training data
+train['Predictions'] = model.predict(train[feature_columns]) * fvc_scale
+train['FVC'] = train['FVC'] * fvc_scale
+
+
+# calculates the competition metric on the training set
 
 def competition_metric(trueFVC, predFVC, predSTD):
     clipSTD = np.clip(predSTD, 70, 9e9)
@@ -46,16 +47,17 @@ def competition_metric(trueFVC, predFVC, predSTD):
 
 
 print ('Competition metric: ', competition_metric(train['FVC'].values,
-       train['Predictions'], mse))
+       train['Predictions'], 215))
 
-# predicting the actual testing data
+# predicting the FVC for the testing data
 
-submission['FVC'] = model.predict(submission[feature_columns])
+submission['FVC'] = model.predict(submission[feature_columns]) \
+    * fvc_scale
 
 # formatting the dataframe to only contain the necessary columns
 
 submission = submission[['Patient_Week', 'FVC']]
-submission['Confidence'] = mse
+submission['Confidence'] = 215
 
 # writing the result to file
 
