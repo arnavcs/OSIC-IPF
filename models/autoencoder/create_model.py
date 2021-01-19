@@ -24,11 +24,11 @@ for i in range(len(feature_columns)):
 
 def build_model():
     model = tf.keras.models.Sequential([
-        tf.keras.layers.Dense(12,
-            activation=tf.nn.relu,
-            input_shape=[len(feature_columns)]),
-        tf.keras.layers.Dropout(0.2),
-        tf.keras.layers.Dense(1),
+        tf.keras.layers.Dense(len(feature_columns) - 100,
+            activation=tf.math.sigmoid,
+            input_shape=[len(feature_columns)]
+            ),
+        tf.keras.layers.Dense(1)
         ])
 
     optimizer = tf.keras.optimizers.RMSprop(0.001)
@@ -44,7 +44,7 @@ model = build_model()
 
 # training the model
 
-history = model.fit(train[feature_columns], train['FVC'], epochs=500)
+history = model.fit(train[feature_columns], train['FVC'], epochs=200)
 
 # saving the model to a file
 
