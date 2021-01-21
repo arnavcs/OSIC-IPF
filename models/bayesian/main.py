@@ -6,8 +6,8 @@ from sklearn.preprocessing import LabelEncoder
 
 exclude_test_patient_data_from_trainset = True
 
-train = pd.read_csv('../input/osic-pulmonary-fibrosis-progression/train.csv')
-test = pd.read_csv('../input/osic-pulmonary-fibrosis-progression/test.csv')
+train = pd.read_csv('../input/train.csv')
+test = pd.read_csv('../input/test.csv')
 
 if exclude_test_patient_data_from_trainset:
     train = train[~train['Patient'].isin(test['Patient'].unique())]
@@ -51,14 +51,12 @@ with pm.Model() as model_a:
 with model_a:
     trace_a = pm.sample(2000, tune=2000, target_accept=.9, init="adapt_diag")
     
-train = pd.read_csv('../input/osic-pulmonary-fibrosis-progression/train.csv')
-test = pd.read_csv('../input/osic-pulmonary-fibrosis-progression/test.csv')
+train = pd.read_csv('../input/train.csv')
+test = pd.read_csv('../input/test.csv')
 train = pd.concat([train, test], axis=0, ignore_index=True)\
     .drop_duplicates()
 le_id = LabelEncoder()
 train['PatientID'] = le_id.fit_transform(train['Patient'])
-
-
 
 n_patients = train['Patient'].nunique()
 FVC_obs = train['FVC'].values
@@ -90,6 +88,8 @@ with pm.Model() as model_a:
     
     # Fitting the model
     trace_a = pm.sample(2000, tune=2000, target_accept=.9, init="adapt_diag")
+
+# predicting the submission
 
 pred_template = []
 for p in test['Patient'].unique():
