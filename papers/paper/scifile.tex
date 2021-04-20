@@ -155,11 +155,86 @@ Furthermore, for injuries like neck fractures, machine learning has proven to be
 For diseases like cancer, machine learning has also been used to give a prognosis and modern machine learning methods have been shown to outperform more classical methods including decision trees \cite{cruz2006applications}.
 On another note, machine learning has already been used with images of leafs to determine plant diseases and their severity, showing the ability to handle and diagnose disease severity based on a CT scan input using machine learning \cite{mwebaze2016machine}.
 
-\paragraph*{Question}
+\paragraph*{Question.}
 
 This study aims to create a model that uses one baseline CT scan, as well as the forced vital capacity (FVC) of the lungs over the time period of one to two years.
 The model then predicts the FVC of the lungs for the next 3 checkups, and hence predicting the rate at which the lung condition degrades. 
 The main questions of interest are: what is the greatest accuracy a machine learning model can attain in predicting the FVC of a IPF patient on their next 3 checkups, and what method produces this accuracy? 
+
+\section*{Procedure}
+
+This study employs the use of many models machine learning models.
+These models are coded in python \cite{10.5555/1593511} with the packages tensorflow \cite{tensorflow2015-whitepaper}, scikit learn \cite{scikit-learn}, and pandas \cite{mckinney2010data}.
+Many of these models are modified and influenced from the work of kaggle notebooks \cite{kaggle}.
+These models include a linear regression, simple neural network, linear regression with autoencoder generated features, simple neural network with autoencoder generated features, bayesian, quantile regression, and linear decay.
+To begin, though, exploratory data analysis is performed, and the data is preprocesed for use by the models.
+
+\paragraph*{Linear Regression.}
+
+The linear regreession method relies on the assumption that the FVC can be expressed as a linear combination of the input features. 
+In specific, the linear regression assumes the formula $y = a_1 x_1 + a_2 x_2 + ... + a_n x_n + b$ is true to find the patient FVC (where $y$ is the FVC, $x_1$ through $x_n$ are the input features, and the coefficients $a_1$ through $a_n$ and the bias $b$ are constants found during model fitting). 
+
+The linear regression model requires the formatting of data by including {\tt weeks\_passed} and {\tt first\_FVC} features obtained from the patient's first checkup.
+After the data formatting, the scikit learn package must be used to create a linear regressor which is then trained on the training data.
+This model is then used to predict the FVC for the testing data, and the model accuracy is measured.
+
+\paragraph*{Simple Neural Network.}
+
+The simple neural network is similar to the human brain. 
+The model contains nodes connected to each other similar to the neurons in a brain. 
+The activation of the nodes depends on the values of the parent nodes, the weights of the connections between the nodes, and the node activation function. 
+The input layer of nodes affects the values in the first hidden layer, which affects the values of the second hidden layer, and so on, eventually affecting the output layer values.
+
+To begin, the data was first formatted in the same way as the linear regression, then several simple neural netwroks are made, each with a different architecture.
+The models are then trained on the training data, and used to predict the forced vital capacity from the testing data.
+Then, the model with the most accurate predicitons was chosen, and the model accuracy was calculated.
+
+\paragraph*{Autoencoder.}
+
+The base autoencoder which I used to modify the exisiting mehtods was created by Kaggle user Welf Crozzo \cite{image2vec}. 
+The idea of an autoencoder is to use an encoder to strip an image into its elementary aspects, and to use a decoder to turn these elementary aspects back into an image through the use of a decoder.
+While both the encoder and decoder must be created for training purposes, we are only interested in the tabular data created by the encoder. 
+The tabular data created by the encoder can then be used as input data for another model such as the linear regression and simple neural network models.
+
+The encoder is loaded from Welf Crozzo's notebook, and is used to stride over the data, adding 2000 extra features based on the patient's CT scan DICOMS.
+Using this new input data, a linear regression and many simple neural network models are created.
+All these models are then trained on the training data, and used to predict the FVC for the testing data.
+The best simple neural network is selected and the model accuracies are calculated for the linear regression and simple neural netwrok models.
+
+\paragraph*{Bayesian Method.}
+
+The bayesian method is modified from Kaggle user Carlos Souza and uses partial pooling, the idea that each patient is fitted with their own individual linear curve, but all linear curves are related by a common distribution \cite{bayesian}. 
+The slope and $y$-intercept of the models are distributed according to a normal distribution, and the deviance of the model from the average model helps determine the confidence. 
+In specific, each patient has their own $\alpha_i$ and $\beta_i$ derived from a common normal distribution. 
+Then, the FVC is predicted for the patient using the linear model $y = \alpha_i x + \beta_i$, and the confidence is found based on the amount of data known for the patient for that time range (more data means more confidence).
+
+To begin, features were removed from the data, and the data was reformatted into a matrix completion task.
+Then, the partial pooling bayesian heirachical model is created and is trained.
+The testing data is then similarily converted into a matrix completion task, and the model is then used to predict the FVC for the testing data.
+Finally, the model accuracy is calculated.
+
+\paragraph*{Multiple Quantile Regression.}
+
+The multiple bayesian regression method is from Kaggle user Ulrich G \cite{multiplequantile}. 
+The method uses convolutional neural networks and quantile regression to determine the model confidence. 
+The quantile regression give the first and third quantiles of the FVC, which can be used to find a spread, and hence a measure of confidence. 
+
+The multiple quantile regression requires the initial formatting of data by creating base information similarily to the linear regression.
+After that, the convolutional neural network is made and trained on the tabular data.
+The quartile diffrerence from the ground truth is then used to calculate the model confidence.
+Finally, the model predicts the FVC of the patients in the testing data, and the accuracy of the model is calculated.
+
+\paragraph*{Linear Decay Theory.}
+
+The linear decay method originates from Welf Crozzo's kaggle notebook \cite{lineardecay}.
+The model assumes that the FVC of the patient decays according to the formula $FVC = a.quantile(0.75)(week - week_{test}) + FVC_{test}$, and that the confidence decays according to the formula $Confidence = Percent + a.quantile(0.75)|week - week_{test}|$.
+A convolutional network (CNN) is then used to predict the coefficient $a$. 
+Since a CNN is used, the CT scans can be analysed in this method.
+
+Similar to the other models, the data must first be formatted. 
+A linear decay model is then created, and a convolutional neural network is made to predict the coefficicents of the model.
+The convolutional neural network is trained with the training data, and is then used to predict the FVC and confidence for the testing data.
+Following the prediciton, the model accuracy is calculated.
 
 \bibliography{scibib}
 
