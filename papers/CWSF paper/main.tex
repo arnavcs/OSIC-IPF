@@ -6,11 +6,11 @@
 
 \usepackage{anyfontsize}
 \usepackage{array}
-\usepackage[style=apa]{biblatex}
+\usepackage[style=apa, apamaxprtauth=3]{biblatex}
 \usepackage{csquotes}
 \usepackage{fancyhdr}
 \usepackage[letterpaper, margin=2.5cm]{geometry}
-\usepackage[draft]{graphicx}
+\usepackage[final]{graphicx}
 \usepackage{lastpage}
 \usepackage{mathptmx}
 \usepackage{setspace}
@@ -38,6 +38,12 @@
 \doublespacing
 
 % titlesec package %
+\titleformat{\section}
+{\bfseries}
+{\thesection. \hspace{0.3em}}
+{0em}
+{}[]
+
 \titlespacing{\section}
 {0em}
 {0em}
@@ -51,13 +57,10 @@
 % titling package %
 \renewcommand{\maketitle}{
     \begin{center}
-        {\Huge \thetitle}
+        {\large \thetitle}
 
         \vspace{0.1em}
-        {\large \theauthor}
-
-        \vspace{0.1em}
-        {\large \today}
+        {\theauthor}
     \end{center}
 }
 
@@ -74,166 +77,178 @@
 
 \section{Introduction}
 
-\paragraph*{Idiopathic Pulmonary Fibrosis.}
+% \paragraph*{Disease Background.}
 
-Idiopathic Pulmonary Fibrosis (IPF) or Cryptogenic Fibrosing Alveolitis is a disease affecting the lung base and leads to lung function decline with little to no therapies available other than lung transplant (\cite{mason1999pharmacological,gross2001idiopathic}). 
-Although it was previously believed that the disease affects only 5 out of every 100,000 individuals, the disease is now known to be much more prevalent (\cite{coultas1994epidemiology,mason1999pharmacological,raghu2018diagnosis}). 
-While age-related, with a median diagnosis age of 66, there is no known cause (\cite{king2011idiopathic,raghu2018diagnosis}).
-Recently, there have been claims that IPF occurs as a result of abnormally activated alveolar epithelial cells (\cite{king2011idiopathic}).
+Idiopathic Pulmonary Fibrosis (IPF) is a disease affecting the lung base which leads to lung function decline and has little to no therapies available other than lung transplant (\cite{mason1999pharmacological,gross2001idiopathic}). 
+The disease affects more than 5 out of every 100,000 individuals (\cite{coultas1994epidemiology,mason1999pharmacological,raghu2018diagnosis}). 
+IPF is age-related, and has a median diagnosis age of 66 but there is no established cause (\cite{king2011idiopathic,raghu2018diagnosis}).
+Patients of IPF experience a shortness of breath, and exhaustion after light excercise (\cite{gross2001idiopathic}).
+The outcome of Pulmonary Fibrosis can range from a healthy stability to a rapid health declination and eventually death (\cite{robbie2017evaluating}). 
+Doctors are unable to easily diagnose disease severity as existing maethods are complicated, time consuming and are not standardized (\cite{robbie2017evaluating}). 
+% An example of such a method is a cough scale or shortness of breath questionnaire (\cite{robbie2017evaluating,king2014phase,van2016cough}).
+% Machine learning has been used with IPF data to provide a prognosis by using a software tool called CALIPER (\cite{maldonado2014automated}).
+% Another example used computed tomography (CT) scans of the lung region (\cite{walsh2018deep}).
 
-Patients of IPF experience a shortness of breath, and some features of the disease include diffuse pulmonary infiltrates recognizable by radiography and varying degrees of inflammation or fibrosis (\cite{gross2001idiopathic}). 
-Affected lung areas alternate with unaffected areas in the lung (\cite{gross2001idiopathic}).
-Affected areas are characterized by the differences in cell age and due to a honeycomb fibrosis pattern (\cite{gross2001idiopathic}).
-
-The outcome of Pulmonary Fibrosis can range from rapid health declination to a healthy stability, but doctors are unable to easily diagnose the severity of the disease. 
-There exist methods to diagnose severity, but these can be complicated and are not standardized (\cite{robbie2017evaluating}). 
-An example of such a method is a cough scale questionnaire or a shortness of breath questionnaire (\cite{robbie2017evaluating,king2014phase,van2016cough}).
-Another method of diagnosing severity is through a functionality test known as the 6 month 6 minute Walk Distance or 6MWD test, but as the name suggests, this test is not instantaneous, and still requires the effort of trained professionals (\cite{robbie2017evaluating,du20146}).
-On the other hand, Machine learning has been used with data from different points in time to provide a prognosis by using a software tool called CALIPER that uses radiological changes to predict IPF severity (\cite{maldonado2014automated}).
-Another case of using machine learning used computed tomography (CT) scans of the lung region and obtained an accuracy of around 76.4\% or 70.7\%, only outperformed 66\% of doctors and only classified the severity rather than providing numerical estimates (\cite{walsh2018deep}).
 An accurate prognosis of the disease will put patients at more ease, and may pave the path for any treatments that will come in the future. 
 For this reason, it is essential that a consistent and easy method for diagnosing the severity of the disease is found.
 
-\paragraph*{Deep Learning Methods.}
+% \paragraph*{Deep Learning Methods.}
 
-Machine learning is a good fit for the task at hand because doctors can let the program run given the data, and it has been used in the past to diagnose other diseases and make predictions (\cite{wang2010high}). 
-Although machine learning has been used before for this task (\cite{robbie2017evaluating,du20146,maldonado2014automated}), the accuracy of the models can be improved on.
-Furthermore, a machine learning model could make it easier to get a prognosis.
+Machine learning is a good fit for the task at hand because of its impartiality, and its prior use for disease diagnosis and prognosis (\cite{wang2010high}). 
+Although machine learning has been used before for this task (\cite{robbie2017evaluating,du20146,maldonado2014automated}), the measurements required are difficult to obtain or the disease severity is categorized rather than numerically predicted (\cite{walsh2018deep}).
+% Furthermore, a machine learning model could make it easier to get a prognosis.
 
-For a disease such as IPF which is a fibrosing disease within the lungs, imaging the lungs through CT scans yields enough insight to accurately evaluate the patient's prognosis (\cite{walsh2018role}).
+% For a disease such as IPF which is a fibrosing disease within the lungs, imaging the lungs through CT scans yields enough insight to accurately evaluate the patient's prognosis (\cite{walsh2018role}).
 
-Furthermore, for injuries like neck fractures, machine learning has proven to be an improvement to the prediction performance using a method of bayesian classification (\cite{kukar1996machine}).
-For diseases like cancer, machine learning has also been used to give a prognosis and modern machine learning methods have been shown to outperform more classical methods including decision trees (\cite{cruz2006applications}).
-On another note, machine learning has already been used with images of leafs to determine plant diseases and their severity, showing the ability to handle and diagnose disease severity based on a CT scan input using machine learning (\cite{mwebaze2016machine}).
+% Furthermore, for injuries like neck fractures, machine learning has proven to be an improvement to the prediction performance using a method of bayesian classification (\cite{kukar1996machine}).
+% For diseases like cancer, machine learning has also been used to give a prognosis and modern machine learning methods have been shown to outperform more classical methods including decision trees (\cite{cruz2006applications}).
+% Machine learning has already been used with images of leafs to determine plant diseases and their severity, showing the ability of machine learning to handle and diagnose disease severity based on a CT scan input (\cite{mwebaze2016machine}).
 
-\paragraph*{Question.}
+
+% \paragraph*{Question.}
 
 This study aims to create a model that uses one baseline CT scan, as well as the forced vital capacity (FVC) of the lungs over the time period of one to two years.
-The model then predicts the FVC of the lungs for the next 3 checkups, and hence predicting the rate at which the lung condition degrades. 
-The main questions of interest are: what is the greatest accuracy a machine learning model can attain in predicting the FVC of a IPF patient on their next 3 checkups, and which method produces this accuracy? 
+The model then predicts the FVC of the lungs for the next 3 checkups, thus predicting the rate at which the lung condition degrades. 
+The main question of interest is which machine learning model produces the greatest accuracy in predicting the FVC of a IPF patient on their next 3 checkups, and is most suitable for use in the medical field.
+
+The accuracy of a model is measured using its Laplace Log Likelihood (LLL).
+The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
+A LLL closer to 0 represents a model which is more accurate, but the score 0 itself is unattainable for all practical purposes, instead, an impressive score would be around -6.5.
+The worst score a model should get is -8.023, and any model with a LLL lower than -8.023 is useless (\cite{laplaceloglikelihood}).
+
+% The use of percent accuracy cannot be employed as the model is not given a categorization task, but rather a regression task. 
+% Using percent accuracy requires the model output to be discrete, not continuous. 
+% For this reason, the use of the Laplace Log Likelihood (LLL) metric is employed to measure the model accuracy. 
+% (Actually, confidence is a misnomer. A higher confidence score corresponds to a greater model uncertainty.)
+
+
+% This score is attained as a result of always guesses the mean FVC, and always has a confidence of the standard deviation of the FVCs. 
+% Any model with a LLL lower than -8.023 is useless.
+
+% The following graph shows an example of how the model's confidence affects the metric. 
+% A confidence which is too high or too low is punished with a worse score. 
+% The local minimum describes the best metric obtainable when the predicted FVC is 2800mL, and the true FVC is 2500mL.
 
 \section{Procedure}
 
-This study employs the use of many machine learning models.
-These models are coded in python (\cite{10.5555/1593511}) with the packages Tensorflow2 (\cite{tensorflow2015-whitepaper}), Scikit-learn (\cite{scikit-learn}), and Pandas (\cite{mckinney2010data}).
-Many of these models are modified and influenced from the work of kaggle notebooks (\cite{kaggle}).
-These models include a linear regression, simple neural network, linear regression with auto-encoder generated features, simple neural network with auto-encoder generated features, bayesian, quantile regression, and linear decay.
+This study employs the use of many machine learning models, some of which are modified and influenced from the work of others (\cite{kaggle}).
+These models are coded in Python (\cite{10.5555/1593511}) with the packages Tensorflow2 (\cite{tensorflow2015-whitepaper}), Scikit-learn (\cite{scikit-learn}), and Pandas (\cite{mckinney2010data}).
+The data for this project is provided by the Open Source Imaging Consortium (\cite{kaggle}).
 Exploratory data analysis was performed, and the data was preprocessed for use by the models.
-The data was split into two categories, training data, and testing data.
-The models all trained on the training data, and would then be tested on the testing data which they had never seen before.
+The data was split into two categories, the training data which all the models trained on, and testing data which the models had never seem before.
+% The models all trained on the training data, and were then tested on the testing data which they had never seen before.
+% These models include a linear regression, simple neural network, linear regression with auto-encoder generated features, simple neural network with auto-encoder generated features, bayesian, quantile regression, and linear decay.
 
-\paragraph*{Laplace Log Likelihood Metric.}
+% \paragraph*{Laplace Log Likelihood Metric.}
 
-The use of percent accuracy cannot be employed as the model is not given a categorization task, but rather a regression task. 
-Using percent accuracy requires the model output to be discrete, not continuous. 
-For this reason, the use of the Laplace Log Likelihood (LLL) metric is employed to measure the model accuracy. 
-The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
-(Actually, confidence is a misnomer. A higher confidence score corresponds to a greater model uncertainty.)
+% The use of percent accuracy cannot be employed as the model is not given a categorization task, but rather a regression task. 
+% Using percent accuracy requires the model output to be discrete, not continuous. 
+% For this reason, the use of the Laplace Log Likelihood (LLL) metric is employed to measure the model accuracy. 
+% The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
+% (Actually, confidence is a misnomer. A higher confidence score corresponds to a greater model uncertainty.)
 
-A LLL closer to 0 represents a model which is more accurate, but the score 0 itself is unattainable for all practical purposes (due to the nature of the metric). 
-An example of an outstanding score would be around -6.5.
+% A LLL closer to 0 represents a model which is more accurate, but the score 0 itself is unattainable for all practical purposes (due to the nature of the metric). 
+% An example of an outstanding score would be around -6.5.
 
-The worst score a model should get is -8.023. 
-This score is attained as a result of always guesses the mean FVC, and always has a confidence of the standard deviation of the FVCs. 
-Any model with a LLL lower than -8.023 is useless.
+% The worst score a model should get is -8.023. 
+% This score is attained as a result of always guesses the mean FVC, and always has a confidence of the standard deviation of the FVCs. 
+% Any model with a LLL lower than -8.023 is useless.
 
-The following graph shows an example of how the model's confidence affects the metric. 
-A confidence which is too high or too low is punished with a worse score. 
-The local minimum describes the best metric obtainable when the predicted FVC is 2800mL, and the true FVC is 2500mL.
+% The following graph shows an example of how the model's confidence affects the metric. 
+% A confidence which is too high or too low is punished with a worse score. 
+% The local minimum describes the best metric obtainable when the predicted FVC is 2800mL, and the true FVC is 2500mL.
 
-\paragraph*{Linear Regression.}
+% \paragraph*{Linear Regression.}
 
-The linear regression (LR) method relies on the assumption that the FVC can be expressed as a linear combination of the input features. 
+The \textbf{linear regression (LR)} method relies on the assumption that the FVC can be expressed as a linear combination of the input features. 
+From every patient's first checkup, {\tt weeks\_passed} and {\tt first\_FVC} features were added to the data.
+The Scikit-learn package was then used to create a linear regressor which was then trained, and the model accuracy was measured.
 
-The linear regression model required the formatting of data by including {\tt weeks\_passed} and {\tt first\_FVC} features obtained from the patient's first checkup.
-After the data formatting, the Scikit-learn package was used to create a linear regressor which was then trained on the training data.
-This model was used to predict the FVC for the testing data, and the model accuracy was measured.
+% \paragraph*{Dense Neural Network.}
 
-\paragraph*{Dense Neural Network.}
+Several \textbf{Dense Neural Networks (DNN)} were created, each with a different architecture. 
+The data was first formatted in the same way used for linear regression.
+% The data was first formatted in the same way used for linear regression, then several dense neural networks were made, each with a different architecture.
+The models were then trained on the training data, the model with the most accurate predictions was chosen, and the model accuracy was calculated.
 
-The data was first formatted in the same way used for linear regression, then several dense neural networks were made, each with a different architecture.
-The models were then trained on the training data, and used to predict the forced vital capacity from the testing data.
-Then, the model with the most accurate predictions was chosen, and the model accuracy was calculated.
+% \paragraph*{Auto-encoder.}
 
-\paragraph*{Auto-encoder.}
-
-The base auto-encoder used in the study to modify the previous methods was created by Kaggle user Welf Crozzo (\cite{image2vec}). 
-The tabular data created by the encoder was then be used as input data for another model such as the linear regression and dense neural network models.
-
-The encoder was loaded from Welf Crozzo's notebook, and was used to stride over the data, adding 2000 extra features based on the patient's CT scan DICOMS.
-Using this new input data, a linear regression and many simple neural network models were created.
-All these models were then trained on the training data, and used to predict the FVC for the testing data.
+The base \textbf{Auto-encoder} utilized in this study was created by Welf Crozzo (\cite{image2vec}). 
+% The tabular data created by the encoder was then be used as input data for another model such as the linear regression and dense neural network models.
+The encoder was used to stride over the data, adding 2000 extra features based on the patient's CT scan images.
+Using this new input data, a linear regression and many simple neural network models were created, which were then trained on the training data, and used to predict the FVC for the testing data.
 The best simple neural network was selected and the model accuracies were calculated for the linear regression and simple neural network models.
 
-\paragraph*{Bayesian Partial Pooling.}
+% \paragraph*{Bayesian Partial Pooling.}
 
-The bayesian method was modified from Kaggle user Carlos Souza and used partial pooling (\cite{bayesian}). 
-The slope and $y$-intercept of the models are distributed according to a normal distribution, and the deviance of the model from the average model helped determine confidence. 
-Each patient has their own $\alpha_i$ and $\beta_i$ derived from a common normal distribution.
-FVC is predicted for the patient using the linear model $y = \alpha_i x + \beta_i$, and the confidence was found based on the amount of data known for the patient for that time range.
-
+The \textbf{Bayesian Partial Pooling} method was modified from Carlos Souza (\cite{bayesian}). 
+% The slope and $y$-intercept of the models are distributed according to a normal distribution, and the deviance of the model from the average model helped determine confidence. 
+% Each patient has their own $\alpha_i$ and $\beta_i$ derived from a common normal distribution.
+% FVC is predicted for the patient using the linear model $y = \alpha_i x + \beta_i$, and the confidence was found based on the amount of data known for the patient for that time range.
 Features were removed from the data, and the data was reformatted into a matrix completion task.
 The partial pooling bayesian hierarchical model was created and trained.
-The testing data was similarly converted into a matrix completion task, and the model was used to predict the FVC for the testing data.
-Finally, the model accuracy was calculated.
+The model was used to predict the FVC for the testing data, and the model accuracy was calculated.
 
-\paragraph*{Multiple Quantile Regression.}
+% \paragraph*{Multiple Quantile Regression.}
 
-The multiple bayesian regression method was taken from Kaggle user Ulrich G (\cite{multiplequantile}). 
-The method uses convolutional neural networks and quantile regression to determine the model confidence. 
-The quantile regression give the first and third quantiles of the FVC, which can be used to find a spread, and hence a measure of confidence. 
+% The multiple bayesian regression method was taken from Kaggle user Ulrich G (\cite{multiplequantile}). 
+% % The method uses convolutional neural networks and quantile regression to determine the model confidence. 
+% % The quantile regression give the first and third quantiles of the FVC, which can be used to find a spread, and hence a measure of confidence. 
 
-The multiple quantile regression required the initial formatting of data by creating base information similarly to the linear regression model.
-The convolutional neural network was made and trained on the tabular data.
-The quartile difference from the ground truth was then used to calculate the model confidence.
-Finally, the model predicts the FVC of the patients in the testing data, and the accuracy of the model was calculated.
+% The data editted as in the linear regression model.
+% The convolutional neural network was made and trained on the tabular data, and the quartile difference from the ground truth was then used to calculate the model confidence.
+% Finally, and the accuracy of the model was calculated.
 
-\paragraph*{Linear Decay Theory.}
+% \paragraph*{Linear Decay Theory.}
 
-The linear decay method used here originates from Welf Crozzo's kaggle notebook (\cite{lineardecay}).
-The model assumes that the FVC of the patient decays according to the formula $FVC = a.quantile(0.75)(week - week_{test}) + FVC_{test}$, and that the confidence decays according to the formula $Confidence = Percent + a.quantile(0.75)|week - week_{test}|$.
-A convolutional network (CNN) was then used to predict the coefficient $a$. 
-
-Similar to the other models, the data was first formatted. 
-A linear decay model was then created, and a convolutional neural network was made to predict the coefficients of the model.
-The convolutional neural network was trained with the training data, and was then used to predict the FVC and confidence for the testing data.
-Following the prediction, the model accuracy was calculated.
+The \textbf{Linear Decay} method used here is a modification of Welf Crozzo's work (\cite{lineardecay}).
+% The model assumes that the FVC of the patient decays according to the formula $FVC = a.quantile(0.75)(week - week_{test}) + FVC_{test}$, and that the confidence decays according to the formula $Confidence = Percent + a.quantile(0.75)|week - week_{test}|$.
+% A convolutional network (CNN) was then used to predict the coefficient $a$. 
+The data was first formatted and some patients with poor CT scans were removed, then a linear decay model was created with a convolutional neural network to predict the unknown model coefficients.
+The convolutional neural network was trained and the model coefficients were found, and the model accuracy was then calculated.
 
 \section{Results}
 
-\begin{figure}[h!]
+% \begin{figure}[h!]
+%     \centering
+%     \begin{tabular}{ | c | c | c | c | }
+%         \hline
+%         Model & Training data & Private testing data & Public testing data \\ 
+%         \hline
+%         \hline
+%         Linear Regression & -6.671 & -6.867 & -6.902 \\ 
+%         \hline 
+%         Dense Neural Network & -6.763 & -6.888 & -6.953 \\
+%         \hline
+%         LR with Auto-encoder & -6.348 &  &  \\
+%         \hline
+%         DNN with Auto-encoder & -11.623 &  &  \\
+%         \hline
+%         Bayesian Partial Pooling & -6.146 & -6.868 & -6.909 \\
+%         % \hline
+%         % Multiple Quantile Regression &  & -6.922 & -6.845 \\
+%         \hline
+%         Linear Decay Theory & -6.723 & -6.877 & -6.918 \\
+%         \hline
+%     \end{tabular}
+
+%     \caption{Laplace Log Likelihood of different models organized by dataset}
+%     \label{Model Performances}
+% \end{figure}
+
+\begin{wrapfigure}{R}{0.4\textwidth}
     \centering
-    \begin{tabular}{ | c | c | c | c | }
-        \hline
-        Model & Training data & Private testing data & Public testing data \\ 
-        \hline
-        \hline
-        Linear Regression & -6.671 & -6.867 & -6.902 \\ 
-        \hline 
-        Dense Neural Network & -6.763 & -6.888 & -6.953 \\
-        \hline
-        LR with Auto-encoder & -6.348 &  &  \\
-        \hline
-        DNN with Auto-encoder & -11.623 &  &  \\
-        \hline
-        Bayesian Partial Pooling & -6.146 & -6.868 & -6.909 \\
-        \hline
-        Multiple Quantile Regression &  & -6.922 & -6.845 \\
-        \hline
-        Linear Decay Theory & -6.723 & -6.877 & -6.918 \\
-        \hline
-    \end{tabular}
+    \includegraphics[width=\linewidth]{img/model comparisons nqr.jpg}
+    
+    \caption{Comparison of Average Model LLL}
+    \label{Model Comparison}
+\end{wrapfigure}
 
-    \caption{Laplace Log Likelihood of different models organized by dataset}
-    \label{Model Performances}
-\end{figure}
-
-Figure \ref{Model Performances} displays the model performance of the models analysed using the model's Laplace Log Likelihood.
-Training data is the same data that the model was trained on, whereas testing data is data the model has never seen before. 
-Out of the testing data, there is the public testing data, which is only around 15\% of the total testing data, and there is private testing data, which consists of the other 85\% of the testing data.
-
-The two models with the auto-encoders do not have matric values for the private and public testing data due to Kaggle's time limit for submissions.
-Both models take a lot of time to run, and hence could not be submitted to the Kaggle competition.
+Figure \ref{Model Comparison} displays the model performance of the models analysed using the model's Laplace Log Likelihood.
+% Training data is the same data that the model was trained on, whereas testing data is data the model has never seen before. 
+Out of the testing data (which the model has never seen during training), there is the public testing data, which is only around 15\% of the total testing data, and there is private testing data, which consists of the other 85\% of the testing data.
+The two models with the auto-encoders do not have metric values for the private and public testing data due to GPU time limits.
+Both models take over 4 hours to run, and hence could not be evaluated.
 
 \begin{figure}[h!]
     \centering
@@ -259,17 +274,23 @@ Both models take a lot of time to run, and hence could not be submitted to the K
 
     \vspace{0.5em}
 
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
         \centering
         \includegraphics[width=\linewidth]{img/aesnn model accuracy.jpg}
         \caption{DNN with Auto-encoder}
         \label{accuracy:aednn}
     \end{subfigure}
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
         \centering
         \includegraphics[width=\linewidth]{img/bayesian model accuracy.jpg}
         \caption{Bayesian Partial Pooling}
         \label{accuracy:bpp}
+    \end{subfigure}
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/ld model accuracy.jpg}
+        \caption{Linear Decay}
+        \label{accuracy:ld}
     \end{subfigure}
 
     \caption{Plots of True FVC vs Model Prediction}
@@ -300,79 +321,74 @@ Both models take a lot of time to run, and hence could not be submitted to the K
 
     \vspace{0.5em}
 
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
         \centering
         \includegraphics[width=\linewidth]{img/aesnn model error.jpg}
         \caption{DNN with Auto-encoder}
         \label{error:aednn}
     \end{subfigure}
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
         \centering
         \includegraphics[width=\linewidth]{img/bayesian model error.jpg}
         \caption{Bayesian Partial Pooling}
         \label{error:bpp}
     \end{subfigure}
+    \begin{subfigure}{.32\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{img/ld model error.jpg}
+        \caption{Linear Decay}
+        \label{error:ld}
+    \end{subfigure}
 
-    \caption{Plots of True FVC vs Model Prediction}
+    \caption{Model Error Distributions}
     \label{error graphs}
 \end{figure}
 
 Figure \ref{accuracy graphs} shows the accuracy of the predictions of several models. 
 The true patient FVC is graphed against the model prediction, so a scatterplot closer to the line $y=x$ means the model is more accurate.
-In addition, figure \ref{error graphs} is a histogram of the errors of the models.
-For this reason, we desire an error which has low spread, is unimodal, and is centered at 0.
+In addition, Figure \ref{error graphs} is a histogram of the errors of the models and we desire an error which has low spread, is unimodal, and is centered at 0.
 
 \section{Conclusions}
 
-\paragraph*{Analysis}
-
-\begin{wrapfigure}{r}{0.4\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{img/average model comparison.jpg}
-    
-    \caption{Comparison of Average Model LLL}
-    \label{Model Comparison}
-\end{wrapfigure}
+% \paragraph*{Analysis}
 
 The results of the project clearly demonstrate that the DNN with Auto-encoder, DNN, and Multiple Quantile Regression models performed the worst.
-On the other hand, the best models were either purely or partly statistical. 
-Figure \ref{Model Comparison} shows the LLL of the models as a graph, verifying that statistical models performed the most consistently, and with greatest accuracy.
+On the other hand, the best models were either purely or partly statistical as in Figure \ref{Model Comparison}. 
+% Figure \ref{Model Comparison} shows the LLL of the models as a graph, verifying that statistical models performed consistently, and with greatest accuracy.
 
-Overall, models which use neural networks perform poorly because a linear model is sufficient to represent the data.
-By introducing extra layers which means a lot or more tunable variables, there is a lower chance that the model will find the best combinations of weights.
-Instead, the model will likely end up with a suboptimal set of weights and biases, and will have reached a `local minimum' rather than a `global minimum'.
+Overall, models which use neural networks performed poorly.
+Introducing extra layers and a lot or more tunable variables, decreases the chance that the model will find the optimal combinations of weights.
+Instead, the model will likely end up with a suboptimal set of weights and biases, and will have reached a local minimum rather than a global minimum.
 
-This is displayed prominently in the Dense Neural Network with Auto-encoder features which has a LLL score worse than.
-Figure \ref{Model Performances} demonstrates that this model has a LLL worse than the baseline score of -8.023.
-Additionally, figure \ref{error graphs}(d) supports the idea that this model is inaccurate due to it's high error.
-The reason for it's poor performance can be attributed to the high number of input features of the model.
-These input features each create more weights and biases for the model to train, and there is a higher chance of reaching an nonoptimal local minimum.
+We see this with the Dense Neural Network with Auto-encoder features which has a LLL score worse than -8.023.
+% Figure \ref{Model Performances} demonstrates that this model has a LLL worse than the baseline score of -8.023.
+% Figure \ref{error graphs}(d) supports the idea that this model is inaccurate due to it's high error.
+Its poor performance can be attributed to the high number of input features of the model, and hence the number of tunable weights and biases.
 
-Another interesting find is that the Bayesian Partial Pooling method seemed to overfit the training data.
-Its performance on the training data was much better than the testing data, but this model still outperformed many others.
+Another interesting find is that the Bayesian Partial Pooling method seemed to overfit the training data as its performance on the training data was much better than the testing data.
+Furthermore, Figure \ref{error:ld} seems to suggest that the Linear Decay Method performed poorly, but it's irregular error distribution is due to the fewer patients the Linear Decay trained on.
+The model's accuracy on the testing data showed no compromise.
 
-There are several other factors that make the statistical models a better choice. 
-For the field of medicine, having a method which is well understood is prefered, and statistical methods are guaranteed to always perform as expected.
-Additionally, these methods provide a useful measure of confidence to doctors.
+Overall, use of the Linear Decay Theory model is advised for its accuracy, consistency, and useful confidence values.
+% There are several other factors that make the statistical models a better choice. 
+For the field of medicine, having a method which is well understood is preferred, and statistical methods such as the Linear Decay Theory model are guaranteed to always perform as expected.
+% Additionally, these methods provide a useful measure of confidence to doctors.
 
-Overall, use of the Bayesian Partial Pooling or Linear Decay Theory methods are advised for their accuracy, consistency, and confidence values.
+% \paragraph*{Significance}
 
-\paragraph*{Significance}
+% The results of this project allowed the accurate and successful prognosis of IPF. 
+The use of the Linear Decay Theory Model would not only eliminate human bias in the prognosis and make it easier for medical professionals, but it would give patients enough time to come to terms with their disease. %  and look into what lifestyle changes they can make to slow the progression
+% Additionally, it would allow for an easier prognosis which requires 
 
-The results of this project allowed the accurate and successful prognosis of IPF. 
-The use of the Linear Decay Theory Model or the Bayesian Partial Pooling Model would not only eliminate human bias in the prognosis, but it would give patients enough time to come to terms with their disease and look into what lifestyle changes they can make to slow the progression.
-
-Additionally, the lessons learnt from this project can be applied to the diagnosis and prognosis of their diseases. 
-Namely, the lesson of not overcomplicating the model can be applied to other projects and has a similar conclusion has been made before in many other projects. 
+% Additionally, the lessons learnt from this project can be applied to the diagnosis and prognosis of their diseases. 
+Additionally, the lesson of avoiding overly complex models can be applied to other projects. %  and a similar conclusion has been observed by others
 This phenomina has been described by Occam's razor, which states that when there are multiple competing hypothesis (the multiple models being compared), the hypothesis with the simplest assumption (the assumption that FVC is a linear function of features) is the best hypothesis.
 
 \section{Acknowledgements}
 
-Thank you to Dr. Christian Jacob for supporting and guiding me through the project.
-Additionally, I would like to thank my teachers, Dr. Beatriz-Garcia Diaz and Ms. Bogusia Gierus for their continued support.
-Finally, I would like to thank Mr. Chuck Buckley for providing invaluable feedback.
+Thank you to Dr. Christian Jacob for supporting and guiding me through the project and to my teachers, Dr. Beatriz Garcia-Diaz and Ms. Bogusia Gierus for their continued support.
+Finally, thank you to Mr. Chuck Buckley for providing invaluable feedback.
 
-\newpage
 \printbibliography
 
 \end{document}
