@@ -111,11 +111,6 @@ This study aims to create a model that uses one baseline CT scan, as well as the
 The model then predicts the FVC of the lungs for the next 3 checkups, thus predicting the rate at which the lung condition degrades. 
 The main question of interest is which machine learning model produces the greatest accuracy in predicting the FVC of a IPF patient on their next 3 checkups, and is most suitable for use in the medical field.
 
-The accuracy of a model is measured using its Laplace Log Likelihood (LLL).
-The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
-A LLL closer to 0 represents a model which is more accurate, but the score 0 itself is unattainable for all practical purposes, instead, an impressive score would be around -6.5.
-The worst score a model should get is -8.023, and any model with a LLL lower than -8.023 is useless (\cite{laplaceloglikelihood}).
-
 % The use of percent accuracy cannot be employed as the model is not given a categorization task, but rather a regression task. 
 % Using percent accuracy requires the model output to be discrete, not continuous. 
 % For this reason, the use of the Laplace Log Likelihood (LLL) metric is employed to measure the model accuracy. 
@@ -206,6 +201,11 @@ The \textbf{Linear Decay} method used here is a modification of Welf Crozzo's wo
 % A convolutional network (CNN) was then used to predict the coefficient $a$. 
 The data was first formatted and some patients with poor CT scans were removed, then a linear decay model was created with a convolutional neural network to predict the unknown model coefficients.
 The convolutional neural network was trained and the model coefficients were found, and the model accuracy was then calculated.
+
+The accuracy of a model is measured using its Laplace Log Likelihood (LLL).
+The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
+A LLL closer to 0 represents a model which is more accurate, but the score 0 itself is unattainable for all practical purposes, instead, an impressive score would be around -6.5.
+The worst score a model should get is -8.023, and any model with a LLL lower than -8.023 is useless (\cite{laplaceloglikelihood}).
 
 \section{Results}
 
@@ -366,7 +366,8 @@ We see this with the Dense Neural Network with Auto-encoder features which has a
 Its poor performance can be attributed to the high number of input features of the model, and hence the number of tunable weights and biases.
 
 Another interesting find is that the Bayesian Partial Pooling method seemed to overfit the training data as its performance on the training data was much better than the testing data.
-Furthermore, Figure \ref{error:ld} seems to suggest that the Linear Decay Method performed poorly, but it's irregular error distribution is due to the fewer patients the Linear Decay trained on.
+
+Furthermore, Figure \ref{error:ld} seems to suggest that the Linear Decay Method performed poorly, but it's irregular error distribution is actually due to the fewer patients the Linear Decay trained on.
 The model's accuracy on the testing data showed no compromise.
 
 Overall, use of the Linear Decay Theory model is advised for its accuracy, consistency, and useful confidence values.
@@ -381,8 +382,7 @@ The use of the Linear Decay Theory Model would not only eliminate human bias in 
 % Additionally, it would allow for an easier prognosis which requires 
 
 % Additionally, the lessons learnt from this project can be applied to the diagnosis and prognosis of their diseases. 
-Additionally, the lesson of avoiding overly complex models can be applied to other projects. %  and a similar conclusion has been observed by others
-This phenomina has been described by Occam's razor, which states that when there are multiple competing hypothesis (the multiple models being compared), the hypothesis with the simplest assumption (the assumption that FVC is a linear function of features) is the best hypothesis.
+Additionally, the lesson of avoiding overly complex models can be applied to other projects and has been described by Occam's razor, which states that when there are multiple competing hypothesis (the multiple models being compared), the hypothesis with the simplest assumption (the assumption that FVC is a linear function of features) is the best hypothesis.
 
 \section{Acknowledgements}
 
