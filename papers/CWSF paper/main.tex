@@ -81,7 +81,7 @@
 
 Idiopathic Pulmonary Fibrosis (IPF) is a disease affecting the lung base which leads to lung function decline and has little to no therapies available other than lung transplant (\cite{mason1999pharmacological,gross2001idiopathic}). 
 The disease affects more than 5 out of every 100,000 individuals (\cite{coultas1994epidemiology,mason1999pharmacological,raghu2018diagnosis}). 
-IPF is age-related, and has a median diagnosis age of 66 but there is no established cause (\cite{king2011idiopathic,raghu2018diagnosis}).
+IPF is age-related, and has a median diagnosis age of 66, but there is no established cause (\cite{king2011idiopathic,raghu2018diagnosis}).
 Patients of IPF experience a shortness of breath, and exhaustion after light exercise (\cite{gross2001idiopathic}).
 The outcome of Pulmonary Fibrosis can range from a healthy stability to a rapid health declination and eventually death (\cite{robbie2017evaluating}). 
 Doctors are unable to easily diagnose disease severity as existing methods are complicated, time consuming and are not standardized (\cite{robbie2017evaluating}). 
@@ -109,7 +109,7 @@ Although machine learning has been used before for this task (\cite{robbie2017ev
 
 This study aims to create a model that uses one baseline CT scan, as well as the forced vital capacity (FVC) of the lungs over the time period of one to two years.
 The model then predicts the FVC of the lungs for the next 3 checkups, thus predicting the rate at which the lung condition degrades. 
-The main question of interest is which machine learning model produces the greatest accuracy in predicting the FVC of a IPF patient on their next 3 checkups, and is most suitable for use in the medical field.
+The main question of interest is which machine learning model produces the greatest accuracy in predicting the FVC of an IPF patient on their next 3 checkups, and is most suitable for use in the medical field.
 
 % The use of percent accuracy cannot be employed as the model is not given a categorization task, but rather a regression task. 
 % Using percent accuracy requires the model output to be discrete, not continuous. 
@@ -130,7 +130,7 @@ This study employs the use of many machine learning models, some of which are mo
 These models are coded in Python (\cite{10.5555/1593511}) with the packages Tensorflow2 (\cite{tensorflow2015-whitepaper}), Scikit-learn (\cite{scikit-learn}), and Pandas (\cite{mckinney2010data}).
 The data for this project is provided by the Open Source Imaging Consortium (\cite{kaggle}).
 Exploratory data analysis was performed and the data was preprocessed for use by the models.
-The data was split into two categories, the training data which all the models trained on, and testing data which the models had never seen before.
+The data was split into two categories, the training data which all the models are trained on, and testing data which the models had never seen before.
 % The models all trained on the training data, and were then tested on the testing data which they had never seen before.
 % These models include a linear regression, simple neural network, linear regression with auto-encoder generated features, simple neural network with auto-encoder generated features, bayesian, quantile regression, and linear decay.
 
@@ -161,7 +161,7 @@ The Scikit-learn package was then used to create a linear regressor which was th
 
 % \paragraph*{Dense Neural Network.}
 
-Several \textbf{Dense Neural Networks (DNN)} were created, each with a different architecture. 
+Several \textbf{Dense Neural Networks (DNN)} were created, each with a different architecture and with the relu activation function. 
 The data was first formatted in the same way used for linear regression.
 % The data was first formatted in the same way used for linear regression, then several dense neural networks were made, each with a different architecture.
 The models were then trained on the training data, the model with the most accurate predictions was chosen, and the model accuracy was calculated.
@@ -201,7 +201,7 @@ The \textbf{Linear Decay} method used here is a modification of Welf Crozzo's wo
 % A convolutional network (CNN) was then used to predict the coefficient $a$. 
 The data was first formatted and some patients with poor CT scans were removed, then a linear decay model was created with a convolutional neural network to predict the unknown model coefficients.
 The convolutional neural network was trained and the model coefficients were found.
-The model accuracy was then calculated.
+The model accuracy was calculated.
 
 The accuracy of a model is measured using its Laplace Log Likelihood (LLL).
 The model's FVC prediction, the true FVC, and the model's confidence are required to calculate the LLL. 
@@ -360,7 +360,7 @@ This is supported by the results in Figure \ref{Model Comparison}.
 % Figure \ref{Model Comparison} shows the LLL of the models as a graph, verifying that statistical models performed consistently, and with greatest accuracy.
 
 Overall, models which use neural networks performed poorly.
-Introducing extra layers and a lot or more tunable variables, decreases the chance that the model will find the optimal combinations of weights.
+Introducing extra layers or more tunable variables decreases the chance that the model will find the optimal combinations of weights.
 Instead, the model will likely end up with a suboptimal set of weights and biases, and will have reached a local minimum rather than a global minimum.
 We see this with the Dense Neural Network with Auto-encoder features which has a LLL score worse than -8.023.
 % Figure \ref{Model Performances} demonstrates that this model has a LLL worse than the baseline score of -8.023.
@@ -370,7 +370,7 @@ Its poor performance can be attributed to the high number of input features of t
 The Bayesian Partial Pooling model was the model that overfitted the training data the most out of the models run.
 This is because its performance on the training data was much better than the testing data.
 
-Furthermore, Figure \ref{error:ld} suggests that the Linear Decay Method performed poorly, but its irregular error distribution is actually due to the fewer patients the Linear Decay trained on.
+Furthermore, Figure \ref{error:ld} suggests that the Linear Decay Method performed poorly, but its irregular error distribution is actually due to the fewer patients the Linear Decay was trained on.
 The model's accuracy on the testing data showed no compromise.
 
 Overall, use of the Linear Decay Theory model is advised for its accuracy, consistency, and useful confidence values.
